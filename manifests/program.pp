@@ -45,20 +45,21 @@ define supervisor::program (
     absent: {
       $autostart = false
       $service_ensure = 'stopped'
-    }
-    present: {
-      $autostart = true
-      $service_ensure = 'running'
 
       if $enable == true {
-        $config_ensure = undef
+        $config_ensure = present
       } else {
         $config_ensure = absent
       }
     }
-    default: {
-      fail("ensure must be 'present' or 'absent', not ${ensure}")
+    present: {
+      $autostart = true
+      $service_ensure = 'running'
     }
+    default: {
+      $service_ensure = undef
+    }
+
   }
 
   if $numprocs > 1 {
