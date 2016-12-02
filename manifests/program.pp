@@ -57,6 +57,7 @@ define supervisor::program (
       $service_ensure = 'running'
     }
     default: {
+      $autostart = false
       $service_ensure = undef
     }
 
