@@ -42,8 +42,8 @@ define supervisor::program (
   if ! defined(Class['supervisor']) { include supervisor }
 
   case $ensure {
-    absent: {
-      $autostart = false
+    'absent': {
+      $autostart = 'false'
       $service_ensure = 'stopped'
 
       if $enable == true {
@@ -52,12 +52,12 @@ define supervisor::program (
         $config_ensure = absent
       }
     }
-    present: {
-      $autostart = true
+    'present': {
+      $autostart = 'true'
       $service_ensure = 'running'
     }
     default: {
-      $autostart = false
+      $autostart = 'false'
       $service_ensure = undef
     }
 
