@@ -22,7 +22,7 @@ class supervisor (
         $path_config    = '/etc'
       }
       else {
-        $pkg_setuptools = 'python-pip'
+        $pkg_setuptools = 'python2-pip'
         $path_config    = '/etc'
       }
     }
