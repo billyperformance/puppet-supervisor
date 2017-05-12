@@ -18,22 +18,20 @@ class supervisor (
   case $::osfamily {
     redhat: {
       if $::operatingsystem == 'Amazon' {
-        $pkg_setuptools = 'python26-pip'
         $path_config    = '/etc'
       }
       else {
-        $pkg_setuptools = 'python2-pip'
         $path_config    = '/etc'
       }
     }
     debian: {
-      $pkg_setuptools = 'python-pip'
       $path_config    = '/etc'
     }
     default: { fail("ERROR: ${::osfamily} based systems are not supported!") }
   }
 
-  ensure_packages($pkg_setuptools, { ensure => present } )
+  # uncomment this when internal pr_856 is merged
+  #  require ::python
 
   package { 'supervisor':
     ensure   => $version,
