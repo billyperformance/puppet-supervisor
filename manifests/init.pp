@@ -10,9 +10,9 @@
 #   }
 
 class supervisor (
-  $version                  = '3.1.3',
-  $include_superlance       = true,
   $enable_http_inet_server  = false,
+  $include_superlance       = true,
+  $version                  = '3.1.3',
 ) {
 
   case $::osfamily {
@@ -33,7 +33,7 @@ class supervisor (
     default: { fail("ERROR: ${::osfamily} based systems are not supported!") }
   }
 
-  package { $pkg_setuptools: ensure => installed, }
+  ensure_packages($pkg_setuptools, { ensure => present } )
 
   package { 'supervisor':
     ensure   => $version,
