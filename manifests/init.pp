@@ -31,7 +31,7 @@ class supervisor (
   }
 
   # uncomment this when internal pr_856 is merged
-  #  require ::python
+  require ::python
 
   package { 'supervisor':
     ensure   => $version,
