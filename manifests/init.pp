@@ -74,11 +74,24 @@ class supervisor (
     require => File["${path_config}/supervisord.conf"],
   }
 
+  exec { "Reload systemd daemon for new supervisord config":
+    command     => '/bin/systemctl daemon-reload',
+    refreshonly => true,
+    subscribe   => [
+      File["/etc/init.d/supervisord"],
+      File["${path_config}/supervisord.conf"],
+    ]
+  }
+
   service { 'supervisord':
     ensure     => running,
     enable     => true,
     hasrestart => true,
-    require    => File["${path_config}/supervisord.conf"],
+    require    => [
+      File["/etc/init.d/supervisord"],
+      File["${path_config}/supervisord.conf"],
+    ],
+    subscribe  => Exec["Reload systemd daemon for new supervisord config"],
   }
 
   if $include_superlance {
